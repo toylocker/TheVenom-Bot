@@ -1,8 +1,6 @@
 let timeout = 30000; // وقت الاستجابة بالميلي ثانية (30 ثانية)
-let poin = 1000; // عدد النقاط الممنوحة لكل إجابة صحيحة
 
-let handler = async (m, { conn, command, usedPrefix }) => {
-    conn.mathquiz = conn.mathquiz ? conn.mathquiz : {};
+let handler = async (m, { conn }) => {
     let id = m.chat;
 
     if (id in conn.mathquiz) {
@@ -16,18 +14,19 @@ let handler = async (m, { conn, command, usedPrefix }) => {
     let answer = num1 + num2; // إجابة العملية الرياضية
 
     let caption = `
-*❰❖── ~『𝐿𝑈𝐹𝐹𝑌-𝐵𝛩𝑇』~──❖❱
+*❰❖── ~『شهد』~──❖❱
 *•┃❖↞ اكتب الإجابة الصحيحة للعملية التالية:* 
 *•┃❖↞ ${num1} + ${num2} = ❓*
 *•┃❖↞ استخدم .انسحب للانسحاب*
 *•┃❖↞ الوقت: ${(timeout / 1000).toFixed(2)} ثانية*
-*•┃❖↞ الجائزة: ${poin} نقطة*
-*❰❖── ~『𝐿𝑈𝐹𝐹𝑌-𝐵𝛩𝑇』~──❖❱*
+*❰❖── ~『شهد』~──❖❱*
 `.trim();
 
+    let file = await conn.sendFile(m.chat, '', '', caption, m);
+    
     conn.mathquiz[id] = [
-        await conn.sendFile(m.chat, '', '', caption, m),
-        answer, poin,
+        file,
+        answer,
         setTimeout(() => {
             if (conn.mathquiz[id]) {
                 conn.reply(m.chat, `*❮ ⌛┇انتهـى الـوقـت┇⌛❯*\n*❖↞┇الاجـابـة✅↞ ${answer}* *┇❯*`, conn.mathquiz[id][0]);
