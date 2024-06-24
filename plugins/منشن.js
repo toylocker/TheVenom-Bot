@@ -12,7 +12,7 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants, args, comm
     teks += `*👾↫* @${mem.id.split('@')[0]}\n`
   }
 
-  teks += `*شـهـد BOT*\n\n*▌│█║▌║▌║║▌║▌║▌║█*`
+  teks += `*شـهـد BOT*\n\n`
 
   conn.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) })
 }
